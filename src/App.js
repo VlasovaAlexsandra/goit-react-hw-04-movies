@@ -1,98 +1,128 @@
-import React, { Component } from 'react';
-import Searchbar from './components/Searchbar/Searchbar'
-import ImageGallery from './components/Searchbar/ImageGallery'
-import Button from './components/Searchbar/Button'
-import Modal from './components/Searchbar/Modal'
-import Spinner from './components/Searchbar/Loader'
-import hitsApi from './services/hits-api'
+import React from 'react';
+// import Searchbar from './components/Searchbar/Searchbar'
+// import ImageGallery from './components/Searchbar/ImageGallery'
+// import Button from './components/Searchbar/Button'
+// import Modal from './components/Searchbar/Modal'
+// import Spinner from './components/Searchbar/Loader'
+// import hitsApi from './services/hits-api'
 import './styles.css'
+import { Route, NavLink, Switch } from 'react-router-dom';
+import HomeView from './views/HomeView'
+import Movies from './views/MoviesPage'
+import MovieId from './views/MovieDetailsPage'
+import NotFoundView from './views/NotFoundView'
 
-class App extends Component {
-  state = {
-    hits: [],
-    largeImageURL: '',
-    currentPage: 1,
-    searchQuery: '',
-    showModal: false,
-    isLoading: false,
-    error: null
-  }
+const App = () => (
+  <>
+    <ul>
+      <li>
+        <NavLink to="/">Home</NavLink>
+      </li>
+      <li>
+        <NavLink to="/movies">Movies</NavLink>
+      </li>
+      <li>
+        <NavLink to="/movies/:movieId">MovieId</NavLink>
+      </li>
+    </ul>
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchQuery !== this.state.searchQuery) {
-      this.fetchHits()
-    }
-  }
+    <Switch>
+      <Route exact path="/" component={HomeView} />
+      <Route exact path="/movies" component={Movies} />
+      <Route path="/movies/:movieId" component={MovieId} />
+      <Route component={NotFoundView} />
 
-  onChangeQuery = query => {
-    this.setState({
-      searchQuery: query,
-      currentPage: 1,
-      hits: [],
-      error: null
-    })
-  }
+    </Switch>
 
-  fetchHits = () => {
-    const { currentPage, searchQuery } = this.state
+  </>
+)
 
-    const options = { searchQuery, currentPage }
+// class App extends Component {
+//   state = {
+//     hits: [],
+//     largeImageURL: '',
+//     currentPage: 1,
+//     searchQuery: '',
+//     showModal: false,
+//     isLoading: false,
+//     error: null
+//   }
 
-    this.setState({ isLoading: true })
+//   componentDidUpdate(prevProps, prevState) {
+//     if (prevState.searchQuery !== this.state.searchQuery) {
+//       this.fetchHits()
+//     }
+//   }
 
-    hitsApi
-      .fetchHits(options)
-      .then(hits => {
-        // console.log(response.data.hits)
-        this.setState(prevState => ({
-          hits: [...prevState.hits, ...hits],
-          currentPage: prevState.currentPage + 1
-        }))
-      })
-      .catch(error => this.setState({ error }))
-      .finally(() => (this.setState({ isLoading: false }),
-        window.scrollTo({
-          top: document.documentElement.scrollHeight,
-          behavior: 'smooth',
-        }))
-      )
+//   onChangeQuery = query => {
+//     this.setState({
+//       searchQuery: query,
+//       currentPage: 1,
+//       hits: [],
+//       error: null
+//     })
+//   }
 
-  }
+//   fetchHits = () => {
+//     const { currentPage, searchQuery } = this.state
 
-  toggleModal = (largeImageURL) => {
-    // console.log(largeImageURL)
-    this.setState(state => ({
-      showModal: !state.showModal,
-      largeImageURL
-    }))
-  }
+//     const options = { searchQuery, currentPage }
 
-  render() {
-    const { hits, isLoading, error, showModal, largeImageURL } = this.state
-    const shouldRenderLoadMoreButton = hits.length > 0 && !isLoading
+//     this.setState({ isLoading: true })
 
-    return (
+//     hitsApi
+//       .fetchHits(options)
+//       .then(hits => {
+//         // console.log(response.data.hits)
+//         this.setState(prevState => ({
+//           hits: [...prevState.hits, ...hits],
+//           currentPage: prevState.currentPage + 1
+//         }))
+//       })
+//       .catch(error => this.setState({ error }))
+//       .finally(() => (this.setState({ isLoading: false }),
+//         window.scrollTo({
+//           top: document.documentElement.scrollHeight,
+//           behavior: 'smooth',
+//         }))
+//       )
 
-      <div className="App">
+//   }
 
-        {error && <h1>Ooooops....ERROR</h1>}
+//   toggleModal = (largeImageURL) => {
+//     // console.log(largeImageURL)
+//     this.setState(state => ({
+//       showModal: !state.showModal,
+//       largeImageURL
+//     }))
+//   }
 
-        <Searchbar onSubmit={this.onChangeQuery} />
+//   render() {
+//     const { hits, isLoading, error, showModal, largeImageURL } = this.state
+//     const shouldRenderLoadMoreButton = hits.length > 0 && !isLoading
 
-        <ImageGallery showModal={this.toggleModal} hits={hits} />
+//     return (
 
-        {/* <button type="button" onClick={this.toggleModal}>Open modal</button> */}
+//       <div className="App">
 
-        {showModal && <Modal onClose={this.toggleModal} largeImageURL={largeImageURL} />}
+//         {error && <h1>Ooooops....ERROR</h1>}
 
-        { isLoading && <Spinner />}
+//         <Searchbar onSubmit={this.onChangeQuery} />
 
-        {shouldRenderLoadMoreButton && <Button fetchHits={this.fetchHits}></Button>}
+//         <ImageGallery showModal={this.toggleModal} hits={hits} />
 
-      </div>
+//         {/* <button type="button" onClick={this.toggleModal}>Open modal</button> */}
 
-    )
-  }
-}
+//         {showModal && <Modal onClose={this.toggleModal} largeImageURL={largeImageURL} />}
+
+//         { isLoading && <Spinner />}
+
+//         {shouldRenderLoadMoreButton && <Button fetchHits={this.fetchHits}></Button>}
+
+//       </div>
+
+//     )
+//   }
+// }
 
 export default App;
