@@ -1,7 +1,6 @@
 import { Component } from "react";
 import Axios from 'axios';
-
-const apiKey = '2986a356ef3a214eb0a4615eddf8ffa1'
+import { apiKey } from '../services/movies-api'
 
 class Reviews extends Component {
     state = {

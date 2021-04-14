@@ -3,8 +3,7 @@ import { Component } from "react"
 import { Link, Route, Switch } from 'react-router-dom'
 import Cast from '../components/Cast'
 import Reviews from '../components/Reviews'
-
-const apiKey = '2986a356ef3a214eb0a4615eddf8ffa1'
+import { apiKey } from '../services/movies-api'
 
 class MovieId extends Component {
     state = {
