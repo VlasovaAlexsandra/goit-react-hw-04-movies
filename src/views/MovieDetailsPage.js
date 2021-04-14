@@ -9,6 +9,7 @@ const apiKey = '2986a356ef3a214eb0a4615eddf8ffa1'
 class MovieId extends Component {
     state = {
         casts: [],
+        contents: [],
         adult: null,
         backdrop_path: null,
         belongs_to_collection: null,
@@ -31,7 +32,8 @@ class MovieId extends Component {
         tagline: null,
         title: null,
         actors: null,
-        reviews: null
+        reviews: null,
+        vote_average: null
     }
 
     async componentDidMount() {
@@ -42,13 +44,19 @@ class MovieId extends Component {
         this.setState({ ...response.data })
 
     }
+    handleGoBack = () => {
+        this.props.history.push('/movies')
+    }
+
     render() {
         return <>
+            <button type="button" onClick={this.handleGoBack}>Go back</button>
             <h1>This is movie page{this.props.match.params.movieId}</h1>
 
             <img src={`https://image.tmdb.org/t/p/w500/${this.state.poster_path}`} alt=""></img>
             <h2>{this.state.title}</h2>
             <p>User Score: {Math.round(this.state.popularity)}%</p>
+            {/* <p>User Score: {this.state.vote_average}%</p> */}
             <h3>Overview</h3>
             <p>{this.state.overview}</p>
             <h3>Genres</h3>
@@ -90,11 +98,11 @@ class MovieId extends Component {
                     component={Cast}
                 // render={() => <Cast actors={actors} />}
                 />
-                {/* <Route
+                <Route
                     path="/movies/:movieId/reviews"
                     component={Reviews}
                 // render={() => <Reviews reviews={reviews} />}
-                /> */}
+                />
             </Switch>
         </>
 

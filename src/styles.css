@@ -205,3 +205,12 @@ img {
 .Button:focus {
   background-color: #303f9f;
 }
+
+.NavLink {
+  font-size: 20px;
+  color: currentColor
+}
+
+.NavLink--active {
+  color: palevioletred
+}

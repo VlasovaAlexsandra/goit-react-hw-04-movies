@@ -12,16 +12,16 @@ class Movies extends Component {
 
     async componentDidMount() {
         const response = await Axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=${apiKey}`);
-        // console.log(response.data.results)
+
         this.setState({ movies: response.data.results })
 
     }
 
     render() {
-        // console.log(this.props.match.url)
+
         return (
             <>
-                <h1>This is movies page</h1>
+                <h1>Trending today</h1>
 
                 <ul>
                     {this.state.movies.map(movie => (
