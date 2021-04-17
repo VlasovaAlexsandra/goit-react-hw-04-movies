@@ -1,22 +1,12 @@
 import { Component } from 'react'
-// import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import { apiKey } from '../services/movies-api'
-
-// const search = (query) => Axios
-//     .get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`)
-//     .then(({ data }) => data)
 
 class HomeView extends Component {
     state = {
         movies: [],
         query: '',
-    }
-
-    async componentDidMount(query) {
-        const response = await Axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`);
-
-        this.setState({ movies: response.data.results, query: '' })
 
     }
 
@@ -24,42 +14,68 @@ class HomeView extends Component {
         this.setState({ query: e.currentTarget.value })
     }
 
-    handleSubmit = (query) => {
-        // const { history, location } = this.props
-        // if (!query) {
-        //     return;
-        // }
-        query.preventDefault()
-        // console.log(this.state);
-        // this.props.onSubmit(this.state.query)
-        // this.setState({ query: '' })
+    handleSubmit = (query, page = 1) => {
+        const { history, location } = this.props
+        if (!query) {
+            return;
+        }
+
+        Axios
+            .get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}&page=${page}`)
+            .then(response => {
+                this.setState({ movies: response.data.results, query: '' })
+                history.push({
+                    pathname: this.props.location.pathname,
+                    search: `query=${query}`
+                })
+                console.log("MoviesPage", location)
+            })
+    }
+
+    componentDidMount() {
+        this.handleSubmit(
+            this.props.location.search.split("=")[1] === undefined
+                ?
+                this.state.query
+                : this.props.location.search.split("=")[1]
+        )
     }
 
     render() {
 
         return (
             <>
-                <header >
-                    <form onSubmit={this.handleSubmit}>
+                <form onSubmit={(e) => {
+                    e.preventDefault()
+                    this.handleSubmit(this.state.query)
+                }}>
+                    <input
+                        type="text"
+                        value={this.state.query}
+                        onChange={this.handleChange}
+                    />
 
-                        <input
-                            type="text"
-                            value={this.state.query}
-                            onChange={this.handleChange}
-                        />
+                    <button type="submit" >
+                        <span >Search</span>
+                    </button>
 
-                        <button type="submit" >
-                            <span >Search</span>
-                        </button>
-                        <ul>
-                            {this.state.movies.map(({ id, original_title }) => <li key={id}>{original_title}</li>)}
-                        </ul>
+                    <ul>
+                        {this.state.movies.map((movie) =>
+                            <li key={movie.id}>
+                                <Link to=
+                                    {{
+                                        pathname: `/movies/${movie.id}`,
+                                        state: { from: this.props.location }
+                                    }}
+                                >
+                                    {movie.title}
+                                </Link>
+                            </li>)}
+                    </ul>
+                </form>
 
-                    </form>
-                </header>
             </>)
     }
 }
 
-
-export default HomeView
+export default withRouter(HomeView)

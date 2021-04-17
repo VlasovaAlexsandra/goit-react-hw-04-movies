@@ -44,7 +44,9 @@ class MovieId extends Component {
 
     }
     handleGoBack = () => {
-        this.props.history.push('/movies')
+        // const { location } = this.props
+        // this.props.history.push(location.state.from)
+        this.props.history.push(`/movies`)
     }
 
     render() {

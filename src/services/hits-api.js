@@ -1,13 +1,10 @@
 import axios from 'axios';
 
-const apiKey = '20282142-3926486b0d0a2f754919f4d11';
+const BASE_URL =
+  'https://api.themoviedb.org/3/search/movie?api_key=2986a356ef3a214eb0a4615eddf8ffa1&query=';
 
-const fetchHits = ({ searchQuery = '', currentPage = 1 }) => {
-    return (axios
-        .get(
-            `https://pixabay.com/api/?image_type=photo&orientation=horizontal&q=${searchQuery}&page=${currentPage}&per_page=12&key=${apiKey}`,
-        ).then(response => response.data.hits)
-    )
-}
+export const searchData = query => {
+  return axios.get(`${BASE_URL}${query}`);
+};
 
-export default { fetchHits }
+// export default fetchHits;
