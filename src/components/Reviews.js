@@ -17,16 +17,23 @@ class Reviews extends Component {
         return (
             <>
                 <h3>Reviews</h3>
-                <div>
-                    {this.state.contents.map(content => (
+                {(this.state.contents.length > 0) ? (
+                    <div>
+                        {this.state.contents.map(content => (
 
-                        <div key={content.id}>
-                            <p>{content.content}</p>
+                            <div key={content.id}>
+                                <b>Author: {content.author}</b>
+                                <p>{content.content}</p>
 
-                        </div>
+                            </div>
 
-                    ))}
-                </div>
+                        ))}
+                    </div>) : (
+                        <span>We don't have any reviews for this movie</span> )
+                    
+
+                }
+
             </>
         )
     }
