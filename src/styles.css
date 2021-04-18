@@ -121,10 +121,17 @@ img {
 /*
  * Стили компонента ImageGallery
  */
-.ImageGallery {
-  display: grid;
-  max-width: calc(100vw - 48px);
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+.MovieGallery {
+  display: flex;
+  justify-content: space-around;
+  padding-left: 15px;
+  /* display: grid; */
+  
+  /* display: flex;
+  flex-wrap: wrap; */
+  
+  /* max-width: calc(100vw - 48px);
+  grid-template-columns: repeat(auto-fill, minmax(640px, 1fr)); */
   grid-gap: 16px;
   margin-top: 0;
   margin-bottom: 0;
@@ -132,6 +139,26 @@ img {
   list-style: none;
   margin-left: auto;
   margin-right: auto;
+}
+
+.Information_title {
+  margin-left: 43px;
+}
+.Informational_list {
+  list-style: none;
+}
+.Description_container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 26px;
+  padding-right: 16px;
+}
+.Genres_container {
+  display: flex;
+  flex-direction: row;
+}
+.Genres {
+  margin-right: 16px;
 }
 
 /*

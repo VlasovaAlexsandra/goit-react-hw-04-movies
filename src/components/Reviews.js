@@ -1,6 +1,7 @@
 import { Component } from "react";
 import Axios from 'axios';
 import { apiKey } from '../services/movies-api'
+import PropTypes from "prop-types";
 
 class Reviews extends Component {
     state = {
@@ -37,6 +38,11 @@ class Reviews extends Component {
             </>
         )
     }
+}
+
+Reviews.propTypes = {
+    movieId: PropTypes.string,
+
 }
 
 export default Reviews

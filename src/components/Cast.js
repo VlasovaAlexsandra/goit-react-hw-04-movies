@@ -1,10 +1,12 @@
 import { Component } from "react";
 import Axios from 'axios'
 import { apiKey } from '../services/movies-api'
+import PropTypes from "prop-types";
 
 class Cast extends Component {
     state = {
-        casts: []
+        casts: [],
+        // profile_path: ""
     }
 
     async componentDidMount() {
@@ -15,8 +17,10 @@ class Cast extends Component {
 
 
     render() {
+        const img = 'https://image.tmdb.org/t/p/w200'
 
         return (
+
             <>
                 <h3>Cast</h3>
                 <ul>
@@ -24,7 +28,8 @@ class Cast extends Component {
 
                         <li key={cast.id}>
                             <p>{cast.name}</p>
-                            <img src={`https://image.tmdb.org/t/p/w200/${cast.profile_path}`} alt="" />
+
+                            <img src={(cast.profile_path) ? (img + cast.profile_path) : ""} alt="" />
 
                         </li>
                     ))}
@@ -35,6 +40,11 @@ class Cast extends Component {
 
 
     }
+}
+
+Cast.propTypes = {
+    movieId: PropTypes.string,
+
 }
 
 export default Cast
