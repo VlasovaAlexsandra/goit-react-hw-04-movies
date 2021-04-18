@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom'
 // import { apiKey } from '../services/movies-api';
 import { searchData } from '../services/hits-api';
 
+
 // const search = (query) => Axios
 //     .get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`)
 //     .then(({ data }) => data)
@@ -43,26 +44,33 @@ class HomeView extends Component {
     return (
       <>
         <header>
-          <form onSubmit={this.handleSubmit}>
-            <input
-              type="text"
-              value={this.state.query}
-              onChange={this.handleChange}
-            />
+          <div className="Searchbar">
+            <form onSubmit={this.handleSubmit} className="SearchForm">
+              <input
+                className="SearchForm-input"
+                type="text"
+                value={this.state.query}
+                onChange={this.handleChange}
+              />
 
-            <button type="submit">
-              <span>Search</span>
-            </button>
-            <ul>
-              {this.state.movies.map(movie => (
-                <li key={movie.id}>
-                  <Link to={`movies/${movie.id}`}>
-                    {movie.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </form>
+              <button type="submit" className="SearchForm-button">
+                <span className="SearchForm-button-label">Search</span>
+              </button>
+            </form>
+          </div>
+          <ul>
+            {this.state.movies.map(movie => (
+              <li key={movie.id}>
+                <Link to={{
+                  pathname: `/movies/${movie.id}`,
+                  state: { from: this.props.location }
+                }}>
+                  {movie.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
         </header>
       </>
     );

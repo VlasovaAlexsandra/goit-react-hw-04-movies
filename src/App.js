@@ -1,15 +1,10 @@
 import React, { Suspense, lazy } from 'react';
-// import Searchbar from './components/Searchbar/Searchbar'
-// import ImageGallery from './components/Searchbar/ImageGallery'
-// import Button from './components/Searchbar/Button'
-// import Modal from './components/Searchbar/Modal'
-// import hitsApi from './services/hits-api'
 import './styles.css';
 import { Route, Switch } from 'react-router-dom';
 // import NotFoundView from './views/NotFoundView';
 import routes from './routes';
 import AppBar from './components/AppBar/AppBar';
-import Spinner from './components/Searchbar/Loader';
+import Spinner from './components/Loader';
 
 const HomePage = lazy(() =>
   import(
